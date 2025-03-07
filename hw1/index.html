@@ -130,7 +130,7 @@
 		
 		Per the below, if we initialize the color of each triangle vertex to be something different, such as dark blue, purple, and light blue, we see each pixel as it approaches the intersections of those two colors to average out the values from each of the weighted vertices, and form a gradient. Points that are closer to a particular vertex have a greater weight, and therefore inherit more of the color. The equation for a point in barycentric coordinate is demonstrated by the below, where &alpha, &beta, and &gamma are the vertex weights that always equal to one:
 
-		div style="display: flex; flex-direction: column; align-items: center;">
+		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
@@ -147,11 +147,11 @@
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="task4triangle.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <figcaption>Triangle with Barycentric Coordinates</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="task4gradientcircle.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <figcaption>Gradient Circle</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -159,27 +159,37 @@
 
 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		Pixel sampling is the process of applying pixels in an image correspond to 3D model space or 2D pixels of an image; in the context of texture mapping, it applies a 2D image by mapping texture coordinates (u, v) in texture space to 3D surface points. We use triangle interpolation for smoothing texture coordinates at vertices, using barycentric coordinates. A texel is the equivalent of a pixel in 2D screen space, and is used in texture space, together forming a texture that is mapped onto a 3D object. 
+		<br>
+		<br>
+		In the rasterize_textured_triangle function, we utilize barycentric coordinates and supersampling to create finalColor, which is used in tex.sample(), or texture sampling, which retrieves a color value given the texture coordinates determined in finalColor. In the last step, we set subpixels in the samplebuffer based on the sample rate to the final color value.
+		<br>
+		<br>
+		When comparing nearest sampling and bilinear sampling, nearest sampling only uses the value of the nearest pixel, while bilinear sampling calculates a weighted average of the four nearest pixel. Therefore, bilinear sampling should have smoother transitions between the background, and display less jagged edges and less drastic color transitions.
+		<br>
+		<br>
+		If we look at the images below, we can identify several differences between nearest and bilinear sampling. In nearest sampling, it selects the closest texel based on the texture coordinates and at smaller sampling rates, has a very pixelated appearence without smooth transitions between color pixels. In the bottom left, which is nearest sampling at 16 samples per pixel, there is a less blocky appearance, but limited smooth color transitions, although it does seem a lot more pleasing to the eye. On the right side is bilinear sampling, where the one above at 1 sample rate is very blocky without significant color transitions, and the bottom right, which is a sample rate of 16, is incredibly smooth with smooth color transitions.
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="task5nearest1ss.png" width="400px"/>
+				  <img src="Nearest Sampling with 1 sample per pixel" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="task5bilinear1ss.png" width="400px"/>
+				  <img src="Bilinear Sampling with 1 sample per pixel" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="task5nearest16ss.png" width="400px"/>
+				  <img src="Nearest Sampling with 16 sample per pixel" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="task5bilinear16ss.png" width="400px"/>
+				  <img src="Bilinear Sampling with 1 sample per pixel" width="400px"/>
 				  <figcaption>Caption goes here.</figcaption>
 				</td>
 			  </tr>
