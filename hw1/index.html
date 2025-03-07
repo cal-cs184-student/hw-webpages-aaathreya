@@ -28,7 +28,7 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 1 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Anousha Athreya</div>
 
 		<br>
 
@@ -48,13 +48,23 @@
 		-->
 
 		<h2>Overview</h2>
-		In this homework, I've learned the basics of visualization centered 
+		In this homework, I've learned the basics of visualization centered around rasterizing images, including drawing triangles, supersampling, transform types such as rotating, translating, and scaling, texture mapping, and level sampling with mipmaps for texture mapping.
+		<br>
+		<br>
+		In lecture, we had discussed a rasterization pipeline, that has core concepts, sampling, antialiasing, and transforms and is fundamental process that converts vector-based graphics (SVGs) into pixel-based images. In this project, I learned the groundwork for graphics rasterization, blending colors and the mathematical background (barycentric coordinates, rotations, transofrmation, texture mapping), that contributes to rendering images and shapes.
+
+
+
+
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
 		The goal of this task is to implement a simple rasterizing triangle algorithm without supersampling using point-in-triangle tests by iterating through the entire image. First, we compute the bounding box of the image by finding the x-min and x-max coordinates, as well as the y-min and y-max coordinates, as the smallest rectangle that encloses the triangle. 
 		<br>
+		<br>
 		Following computing the bounding box, I iterate through each pixel inside the bounding box, identifying the pixel center, which is (x + 0.5, y + 0.5) to see if the pixel is inside the triangle. To check whether the pixel center is inside the triangle, I identify the triangle using the intersection of three half-planes, through three line tests with the format of the implicit line equation:
 		<br>
+		<br>
 		Since the implicit line equations calculated for each of the half-planes to construct the triangle, they are non-negative if (nextX, nextY) is on the ‘inside’ of the triangle edge. In order for a pixel center to be inside or on the boundary of the triangle, it must satisfy all three edge equations. If true, I indexed into the sample buffer, which is an array of pixels which represent the matrix, and index based on the values of the bounding box to set that pixel equal to the color passed into the function.
+		<br>
 		<br>
 		My algorithm is no worse than one that checks every pixel within the bounding box of the triangle because it iterates through the bounds of the bounding box and performs point-in-triangle tests for each pixel to check whether it is inside the three half edges that construct the triangle. The complexity for my method in Task 1 has the same O-notation as the naive approach, it is no worse in complexity. 
 
