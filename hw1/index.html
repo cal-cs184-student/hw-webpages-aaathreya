@@ -197,7 +197,22 @@
 		</div>
 
 		<h2>Task 6: "Level Sampling" with mipmaps for texture mapping</h2>
-		In Task 6, we utilize level sampling with mipmaps with similar texture mapping 
+		In Task 6, we conduct level sampling, which is a technique to determine which mipmap level to use when sampling a texture. A mipmap is a small version of the original texture, such as each 'level' is halved of the original level size. If a mipmap, untouched, has a resolution of 512x512, then level 1 will have a resolution of 256x256 and so forth until it reaches a resolution size of 1x1, which is the smallest value a mipmap can be. When rendering an object, level sampling is used to choose the appropriate mipmap level depending on the image. If the object is farther away, a higher mipmap level can be used for a lower resolution texture, which improves the rendering speed.
+		<br>
+		<br>
+		In the code, we implement three types of level sampling: L_ZERO, L_NEAREST, and L_LINEAR. L_ZERO is when there is no mipmapping, so we only sample from level 0 mipmaps which are full resolution texture values. L_NEAREST is used in context with the appropriate mipmap sampling by choosing the nearest appropriate mipmap level and using that for the level sampling. L_LINEAR uses trilinear filtering, such that it blends between two adjacent mipmap levels and uses it in the level sampling.
+		<br>
+		<br>
+		Pixel sampling is used for determining a texture's color for a given texel when we map a 2D texture onto a 3D object. We can think of texels as texture pixels, which is the smallest unit of a texture image that composes a texture. We utilize two different methods of pixel sampling: P_NEAREST, and P_LINEAR, which is the bilinear sampling type that we see in Task 5. While using nearest sampling is fast by matching the current pixel to the value of the nearest one, it causes blocky images without smooth transitions with the background and low memory usage. In contrast, bilinear sampling is slightly slower in terms of speed, but provides smoother transitions by averaging out the values of the colors from nearby pixels. L_ZERO is fast in terms of speed, low in terms of memory usage, and no aliasing because it is the highest resolution possible for the texture (no mipmapping). L_NEAREST, since it picks the closest mipmap level is fast in terms of speed, but slow in terms of memory. It is similar to P_NEAREST where is has blocky transitions and limited antialiasing because it picks the nearest mipmap level. L_LINEAR is similar to P_LINEAR such that it uses trilinear instead of bilinear filtering, and is slower in speed because it combines two mipmap levels to get the resulting color value for level sampling. Throughout the homework, we've seen the impact of the number of samples per pixel affecting the appearance of an image through rendering. At smaller sample levels, the image appears blocky without smooth transitions, but is incredibly fast with low memory usage. At higher levels for the sample rate, antialiasing improves but speed significantly decreases and memory increases.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task6.png" width="400px"/>
+				  <figcaption>Nearest Sampling with 1 sample per pixel</figcaption>
+				</td>
+			  </tr>
 		</div>
 	</body>
 </html>
